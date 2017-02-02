@@ -39,3 +39,8 @@ Other applications:
  * Social network analysis
  * Market segmentation
  * Astronomical data analysis
+
+## Linear Regression with one variable 
+
+### Model representation
+
