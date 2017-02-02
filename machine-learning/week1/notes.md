@@ -44,3 +44,34 @@ Other applications:
 
 ### Model representation
 
+![Housing Prices](img/housing_prices.png)
+
+**Supervised Learning**: Given the "right answer" for each example in the data.
+
+**Regression Problem**: Predict real-valued output (continuous)
+
+**Classfication**: Discrete-valued output
+
+Training set of housing prices
+
+Notation:
+* m = Number of training examples
+* x's = "input" variable / features
+* y's = "output" variable / "target" variable
+* (x, y) - one training example
+* (x^(i), y^(i)) - ith traning example
+
+```
+                     Training Set 
+                         |
+                  Learning Algorithm 
+                         |
+Size of house (x) -> h (hypothesis) -> Estimated price (y)
+
+p.s. h maps from x's to y's.
+```
+
+
+How do we represent h?
+
+![equation](http://www.sciweavers.org/tex2img.php?eq=h_%7B%5Ctheta%7D%20%28x%29%20%3D%20%20%5Ctheta_%7B0%7D%20%2B%20%5Ctheta_%7B1%7Dx%20&bc=White&fc=Black&im=png&fs=12&ff=arev&edit=0)
