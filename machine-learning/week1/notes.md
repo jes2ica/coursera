@@ -42,7 +42,7 @@ Other applications:
 
 ## Linear Regression with one variable 
 
-### Model representation
+### Model Representation
 
 ![Housing Prices](img/housing_prices.png)
 
@@ -62,10 +62,10 @@ Notation:
 * (x^(i), y^(i)) - ith traning example
 
 ```
-                     Training Set 
-                         |
-                  Learning Algorithm 
-                         |
+                       Training Set 
+                           |
+                    Learning Algorithm 
+                           |
 Size of house (x) -> h (hypothesis) -> Estimated price (y)
 
 p.s. h maps from x's to y's.
@@ -75,3 +75,6 @@ p.s. h maps from x's to y's.
 How do we represent h?
 
 ![equation](img/equation.png)
+
+### Cost Function
+
