@@ -11,4 +11,9 @@
 ### Generic Graph Search
 ### Goals
 - find everything findable
-- from a given start vertex
+  - from a given start vertex
+- don't explore anything twice
+
+### Generic Algorithm 
+``Given graph G, vertex S)``
+- initially s explored, all other vertices unexplored
