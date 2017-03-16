@@ -15,5 +15,7 @@
 - don't explore anything twice
 
 ### Generic Algorithm 
-``Given graph G, vertex S)``
+``Given graph G, vertex S``
 - initially s explored, all other vertices unexplored
+- while possible:
+  - choose an edge (u, v) with u explord and 
