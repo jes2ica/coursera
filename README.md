@@ -1,9 +1,9 @@
 # coursera
 2017
 
-- Machine Learning (Stanford)
+- Machine Learning ([Stanford](https://www.coursera.org/learn/machine-learning))
   - Week 1: Introduction ([notes](https://github.com/jes2ica/coursera/blob/master/machine-learning/week1/notes.md))
-- Design and Analysis of Algorithms (Stanford)
+- Design and Analysis of Algorithms ([Stanford](https://www.coursera.org/specializations/algorithms))
   - Course 1: Divided and Conquer, Sorting and Searching, and Randomized Algorithms
   - Course 2: Graph Search, Shortest Paths, and Data Structures
      - Week 1: Breadth-first and depth-first search;computing strong components; applications ([notes](https://github.com/jes2ica/coursera/blob/master/design-and-analysis-of-algorithms/week1/notes.md))
