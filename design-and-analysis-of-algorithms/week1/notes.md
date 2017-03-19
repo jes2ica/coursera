@@ -32,10 +32,21 @@
 - explore nodes in "layers"
 - can compute shortest paths
 - can compute connected components of and undirected graph
-- O(m+n) time using a queue (FIFO)
+- O(m+n) time using a queue (FIFO) m - number of edges, n - number of nodes 
 #### Depth-First Search
 - explore aggressibly like a maze, backtrack only when neccessary
 - compute topological ordering of directed acyclic graph
 - compute connected components in difrected graphs
 - O(m+n) time using a stack (LIFO)
 
+### The code
+#### BFS(graph G, start vertex s)
+[all nodes initally unexplored]
+- mark s as explored
+- let Q=queue data strcture, initialized with s
+- while Q is not empty:
+  - remove the first node of Q, call it v
+  - for each edge (v, w):
+    - if w unplored
+      - mark w as explored
+      - add w to Q (at the end)
