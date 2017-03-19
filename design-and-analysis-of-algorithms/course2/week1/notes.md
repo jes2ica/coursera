@@ -79,3 +79,28 @@
         - BFS(G, i) -> discovers precisely i's connected components
   - Note: finds every connected components.
   - Running time: O(m+n) -> o(1) per node, o(1) per edge in each BFS
+#### DFS
+- mimic BFS code, use a stack instead of a queue
+- Recursive version: 
+  - DFS (graph G, start vertex s)
+    - mark s as explored
+    - for every edge (s, v):
+      - if v unexplored
+        - DFS(G, v)
+- Claim #1: at the end of the algorithm, v marked as explored <=> there is a path from s to v in G.
+  - Reason: particular instantiatation generic search procedure
+- Claim #2: running time is o(ns + ms)
+  - Reason: look at each node in connected component of s at most once, each edge at most twice.
+- *Application: Topological Sort*
+  - Definition: A topological ordering of a directed graph G is a labelling f of G's nodes such that: 
+    - the f(v)'s are the set {1,2,...,n}
+    - (u,v) belongs to G => f(u) < f(v)
+  - Motivation: sequences tasks while respecting all precedence constrains
+    - undergraduate courses
+  - Note: 
+    - G has directed cycle => no topological ordering
+    - no directed cycle => can compute topological ordering in o(m+n) time.
+  - Straightforward Solution
+    - Note: every directed acyclic graph has a sink vertex
+    - Reason: if not, can keep falling outgoing arcs to produce a directed cycle. 
+- *Application: Strong connected components of directed graphs*
