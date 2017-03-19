@@ -13,9 +13,11 @@
 - find everything findable
   - from a given start vertex
 - don't explore anything twice
+- O(m+n) time
 
 ### Generic Algorithm 
 ``Given graph G, vertex S``
 - initially s explored, all other vertices unexplored
 - while possible:
-  - choose an edge (u, v) with u explord and 
+  - choose an edge (u, v) with u explord and v explored
+  - mark v explored
