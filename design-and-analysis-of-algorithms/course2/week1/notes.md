@@ -32,7 +32,7 @@
 - explore nodes in "layers"
 - can compute shortest paths
 - can compute connected components of and undirected graph
-- O(m+n) time using a queue (FIFO) m - number of edges, n - number of nodes 
+- O(m+n) time using a queue (FIFO) m - number of edges, n - number of nodes
 #### Depth-First Search
 - explore aggressibly like a maze, backtrack only when neccessary
 - compute topological ordering of directed acyclic graph
@@ -103,4 +103,25 @@
   - Straightforward Solution
     - Note: every directed acyclic graph has a sink vertex
     - Reason: if not, can keep falling outgoing arcs to produce a directed cycle. 
+    - To compute topological ordering: 
+      - let v be a sink vertex of G
+      - set f(v) = n
+      - recurse on G-{v}
+    - Why does it work? 
+      - when v is assigned to the position i (sink vertex), all outgoing arcs already deleted => all lead to later verices in ordering.
+  - Topological Sort via DFS (Slick)
+    - DFS(graph G, start vertex s)
+      - mark s explored
+      - for every edge (s, v):
+        - if v not yet explored
+          - DFS(G, v)
+      - set f(s) = current_label
+      - current_label--
+    - DFS-Loop(graph G)
+      - mark all nodes unexplored
+      - current_label=n
+        - to keep track of ordering
+      - for each vertex v belonging to G:
+        - if v not yet explored // in some previous DFS call
+          - DFS(G, v)
 - *Application: Strong connected components of directed graphs*
