@@ -50,3 +50,28 @@
         - So: Let P = any s -> w* path. Must "cross the frontier"
         - every s->w* path P has to have the form: s ~> y ~> z \~\~> w*
         - by Dijkstra's greedy criterion, A[V*] + l(v*w*) <= A[y] + l(yz) (y ∈ X, z ∉ X)
+### Heap Operations
+- Recall: heap: perfom insert, extra-min in O(log n) time.
+  - Conceptually, a perfectrly balanced binary tree
+  - heap property: at every node, key <= children's keys
+  - extract-min by swapping up last leaf, bubbling down 
+  - insert via bubbling up
+  - Also: will need obility to delete from middle from heap (bubble up or down, as needed)
+- Two Invariants
+  - Invariant #1: elements in heap = vertices of V-X.
+  - Invariant #2: for v ∉ X, key[v] = smallest Dijkstra greedy score of an edge (u, v) ∈ E with u ∈ X ( ∞ if no such edges) exist)
+  - Point: by invariant, extract-min yields correct vertext w* to add to X next. (and we set A[v*] to key[w*])
+- Maintaining the invariants
+  - To maintain #2:
+    - when w etracted & from heap (i.e. added to X)
+      - for each edge (w, v) ∈ E:
+        - if v ∈ V-X (i.e. in heap)
+          - deleted v from heap
+          - recompute key[v] = min {key[v], A[w] + l(wv)} 
+          - re-insert v into heap
+- Running Time Analysis
+  - You check: dominated by heap operations (o(log n) each)
+   - (n-1) extract mins
+   - each edge (v, w) triggers at most one delete/insert combo (if v added to X first) 
+ - So # of heap operations is O(n + m) = O(m) -> Since graph weakly connected
+ - So running time: O(m long n) - like sorting
