@@ -135,6 +135,8 @@
       - Case 1: u visited by DFS before v => recursive call coresponding to v finishes before that of u (since DFS)
       - Case 2: v visited before u => v's recursive call finishes before u's even starts => f(v) > f(u)
 - *Application: Strongly Connected Components*
+![SCC](http://www.clipular.com/c/5192857490292736.png?k=wRWeMwd2KQBgiZG3rbbiuX5PUrs)
+
   - Formal Definition: the strongly connected components (SCCS) of a directed graph G are the equivalence classes of the relation
     - u ~ v <=> there is a path u->v and a path v->u in G
     - You check: ~ is a equivalence relation
