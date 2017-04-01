@@ -75,6 +75,3 @@ p.s. h maps from x's to y's.
 How do we represent h?
 
 ![equation](img/equation.png)
-
-### Cost Function
-
