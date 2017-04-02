@@ -22,3 +22,19 @@
 ### Features and Polynomial Regression
 #### Polynomial Regression
 - We can change the behavior or curve of our hypothesis function by making it a quadratic, cubic or square root function (or any other form).
+### Normal Equation
+#### Gradient Descent vs Normal Equation
+- Gradient Descent 
+  - Need to choose alpha	
+  - Needs many iterations	
+  - O (kn2)
+  - Works well when n is large	
+- Normal Equation
+  - No need to choose alpha
+  - No need to iterate
+  - O (n3), need to calculate inverse of X'X
+  - Slow if n is very large
+#### Normal Equation Noninvertibility
+- If X'X is noninvertible, the common causes might be having :
+  - Redundant features, where two features are very closely related (i.e. they are linearly dependent)
+  - Too many features (e.g. m ≤ n). In this case, delete some features or use "regularization". 
