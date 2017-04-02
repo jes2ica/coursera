@@ -19,3 +19,6 @@
 - Learning rate α:
   - If α is too small: slow convergence.
   - If α is too large: ￼may not decrease on every iteration and thus may not converge.
+### Features and Polynomial Regression
+#### Polynomial Regression
+- We can change the behavior or curve of our hypothesis function by making it a quadratic, cubic or square root function (or any other form).
