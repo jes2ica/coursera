@@ -85,3 +85,61 @@
   - rank: i.e. # of keys less than or equal to a given value: o(log n)
   - output in sorted order: o(n)
   - insert/delete o(log n)
+- Structure
+  - exact one node per key
+  - most basic version, each node has:
+    - left child pointer
+    - right child pointer
+    - parent pointer
+- The height of a BST
+  - Note: many possible trees for a set of keys.
+  - height(depth=longest root-leaf path) could be anywhere from ~log2n(best case, perfectly balanced) to ~n(worst case)
+- Searching and Inserting
+  - To search for key k in tree t
+    - start at the root
+    - traverse left(if k < key at current node)/right(if k > key at current node) child pointer as needed
+    - return node with key k or null, as appropriate
+  - To insert a new key k into a tree t
+    - search for k (unsuccessfully)
+    - rewire final null pointer to point to new node with key k
+    - the height governs worst-case running time
+- Min, Max, Pred and Succ
+  - Min/Max
+    - start at the root
+    - follow left/right child pointers until you can't anymore (return last key found)
+  - Predecessor
+    - easy case: if k's left substree is not empty, return max key in left subtree
+- In-Order Traversal
+  - Print out keys in increasing order
+    - let r = root of search tree, with subtrees T(l) and T(r)
+    - recurse on T(l)
+      - print out keys of T(l) in increasing order
+    - print out r's key
+    - recurse on T(r) 
+      - print out keys of T(r) in increasing order
+    - otherwise: follow parent pointers until you get to a key less than k
+- Deletion
+  - To detele a key k from a search tree
+    - search for k
+      - easy case (k has no children)
+        - just dilete k's node from tree, done
+      - medium case (k's node has one child)
+        - just "splice out" k's node (unique child assumes position previously held by k's node)
+      - difficult case (k's node has 2 children)
+        - compute k's predecessor l (i.e. traverse k's non-NULL left child ptr, then right child ptrs until no longer possible)
+        - swap k and l!
+          - Note: in its new position, k has no right child! => easy to delete or splice out k's new node
+          - Exercise: at end, we have a valid search tree!
+        - Running time: o(height)
+- Select and Rank
+  - Idea: store a little bit of extra info at each tree node about the tree itself (i.e. not about the data)
+  - Example augmentation: size(x) = # of treenodes in subtree rooted at x.
+  - Note: if x has children y and z, then size(x) = size(y) + size(z) + 1
+  - Also: easy to keep sizes up-to-date during an Insetion or Deletion
+  - How to SELECT ith order statistic from augmented search tree (with subtree sizes)
+    - start at root x, with children y and z.
+    - let a = size(y) l(a) = 0 if x has no left child
+    - if a = i-1, return x's key
+    - if a >= i, recursively compute ith order statistic of search tree rooted at y
+    - if a < i, recursively compute (i-a-1) # order statistic of saerch tree rooted at z
+  - Running time = O(height)
