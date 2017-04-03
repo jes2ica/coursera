@@ -22,5 +22,49 @@
   - DELETE: (o(log n) time)
 #### Applications: Sorting
 - Canonical use of heap: fast way to do repeated minimum
-- Example: SelectionSort
-  
+- Example: SelectionSort 
+  - o(n) linear scans, o(n^2) runtime on array of length n
+- HeapSort
+  - insert all n array elements into a heap
+  - extract-min to pluck at elements in sorted order
+  - running time = 2n heap operations = o(nlogn) time
+  - optimal for a "comparison-based" sorting algorithm!
+#### Application: Event Manager
+- "Priority Queue" - synonym for a heap
+- Example: simulation (e.g. for a video game)
+  - objects = event records (action/update to occur at given time in the future)
+  - key = time event scheduled to occur
+  - etract-min => yields the next scheduled event
+#### Application: Median Maintanence
+- I give you: a sequence x1,...xn of numbers, one-by-one.
+- You tell me: at each time step i, the median of {x1, ...xi};
+- constraint: use o(log i) time at each step i
+- solution: maintain heaps H(low): supports EXTRACT_MAX; H(high): supports EXTRACT_MIN
+- key idea: maintain invariant thath ~ i/2 smallest (largest) elements in H(low)/H(high)
+- you check:
+  - can maintain invariant with o(log i) work
+  - given invariant, can compute median in o(log i) work
+#### Application: Speeding Up Dijkstra
+- Dijkstra's Shortest-Path Algorithm
+  - naive implementation => runtime = o(nm) 
+    - n: # loop iteration
+    - m: work per iteration [linear scan through edges for minimum computations]
+  - with heaps => run time = o(m log n)
+### Implementation Details
+- Conceptually: think of a heap as a tree.
+  - rooted, binary, as complete as possible
+- Heap property: at every node x, key[x] <= all keys of x's children
+- Consequence: object at root must have minimum key value
+- Insertion
+  - step 1: stick k at end of last level.
+  - step 2: bubble-up k until heap property is restored (i.e. key of k's parent is <=k)
+  - check: 
+    - bubbling up process must stop, with heap property restored
+    - runtime = o(log n)
+- Extract-min
+  - Delete root
+  - Move last leaf to be new root
+  - Iteratively bubble-down until heap property has been restored
+  - check:
+    - only bubble-down once per level, halt with a heap
+    - runtime = o(log n)
