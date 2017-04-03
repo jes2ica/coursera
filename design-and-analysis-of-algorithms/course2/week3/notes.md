@@ -10,7 +10,7 @@
 - level 2 - "this problem calls out for a heap"
 - level 3 - "I only use data structures that I wrote myself"
 
-### Heap: Supported Operations
+### Heap
 - a container of objects that have keys 
   - employer records, network edges, events etc.
 - Supported Operations
@@ -68,3 +68,20 @@
   - check:
     - only bubble-down once per level, halt with a heap
     - runtime = o(log n)
+### Sorted Arrays
+- Supported Operations
+  - search: o(log n)
+  - select (given order statistic i): o(1)
+  - min/max: o(1)
+  - predecessor/successor (given pointer to a key): o(1)
+  - rank: i.e. # of keys less than or equal to a given value: o(log n)
+  - output in sorted order: o(n)
+### Balanced Search Trees
+- Supported Operations
+  - search: o(log n)
+  - select (given order statistic i):o(log n)
+  - min/max: o(log n)
+  - predecessor/successor (given pointer to a key): o(log n)
+  - rank: i.e. # of keys less than or equal to a given value: o(log n)
+  - output in sorted order: o(n)
+  - insert/delete o(log n)
