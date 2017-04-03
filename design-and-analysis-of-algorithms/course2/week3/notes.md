@@ -123,14 +123,14 @@
     - search for k
       - easy case (k has no children)
         - just dilete k's node from tree, done
-      - medium case (k's node has one child)
+      - medium case (k's node has one child)  
         - just "splice out" k's node (unique child assumes position previously held by k's node)
       - difficult case (k's node has 2 children)
         - compute k's predecessor l (i.e. traverse k's non-NULL left child ptr, then right child ptrs until no longer possible)
         - swap k and l!
           - Note: in its new position, k has no right child! => easy to delete or splice out k's new node
           - Exercise: at end, we have a valid search tree!
-        - Running time: o(height)
+    - Running time: o(height)
 - Select and Rank
   - Idea: store a little bit of extra info at each tree node about the tree itself (i.e. not about the data)
   - Example augmentation: size(x) = # of treenodes in subtree rooted at x.
@@ -143,3 +143,37 @@
     - if a >= i, recursively compute ith order statistic of search tree rooted at y
     - if a < i, recursively compute (i-a-1) # order statistic of saerch tree rooted at z
   - Running time = O(height)
+#### Red-black Trees
+(see also AVL trees, splaytrees, B trees)
+- Invariants
+  - each node red or black
+  - root is black
+  - no 2 reds in a row [red node => only black children]
+  - every root-null path has same number of black nodes (like in an unsuccessful search)
+- Height Guarantee
+  - Claim: every red-black tree with n nodes has height <= 2log2(n + 1)
+  - Proof: 
+    - observation: if every root-NULL path has >= k nodes, then tree includes (at the top) a perfectly blanced search tree of depth k 
+    - => size n of the tree must be at least 2^k - 1, k = minimum # of nodes on root-NULL path
+    - k <= log2(n + 1)
+    - Thus: in a red-black tree with n nodes, there is a root-NULL path with at most log2(n+1) black nodes.
+    - By 4th invariant: every root-NULL path has <= log2(n+1) black nodes
+    - By 3th invariant: every root-NULL path has <= 2log2(n+1) total nodes.
+- Rotations
+  - Key primitive: rotations. (common to all balanced search tree implementations: red-black, AVL, B+, etc)
+  - Idea: locally rebalance subtrees at a node in o(1) time.
+  - Properties: search tree property maintain, can implement in o(1) time.
+- Insertion
+  - Idea for Insert / Delete: proceed as in a normal binary search tree, then recolor and/or perform rotations until invariants are restored.
+  - Insert(x): 
+    - insert x as usual (make x a leaf)
+    - try coloring x red
+    - if x's parent y is black, done.
+    - else y is red => y has a black parent w 
+      - case 1: the other child z of x's grandparent w is also red.
+        - recolor y, z black and w red
+        - by point: does not break invariant 4
+        - either restores invariant 3 or prepagates the double red upward.
+        - can only happen o(log n) times
+      - case 2: the other child z of x's grandparent w is NULL or is a black.
+        - Exercise / case analysis: can eliminate double-red [=> all invariants satisfied] in o(1) time via 2-3 rotations + recolorings.
