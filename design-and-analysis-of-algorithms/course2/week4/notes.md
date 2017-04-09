@@ -82,7 +82,54 @@ Objects -----> integers -----> buckets {0,1,2,...n-1}
 
 - hash code: e.g. subroutine to convert strings to integers
 - compression function: like the mod n function
-- How to choose n= # of buckets
+- How to choose n = # of buckets
   - choose n to be a prime (within costant factor of # of objects in table)
   - not too close to a power of 2
   - not too close to a power of 10
+
+#### The Load of a Hash Table
+- Definition: the load factor of a hash table is α := (# of objects in hash table) / (# of buckets of hash table) 
+  - α = o(1) is neccesarry condition for operations to run in constatnt time.
+  - with open addressing , need α << 1
+- Upshot:
+  - for good hash table performance, need to control load
+  - need a good hash function (i.e. spreads data evenly across buckets)
+- Ideal:
+  - use super-clever hash function guarenteed to speed every data set out evenly 
+- Problem: DOES NOT EXIST! (for every hash function, there is a panthological data set)
+- Reason: fix a hash function h u -> {0,1,2,...,n-1} (assume |u| >> n)
+  - ala pigeonhole priciple, ∃ bucket i such that at least |u|/n elements of u hash to i under n
+  - if dataset drawn only from these, everything collides!
+  
+#### Pathological Data in the Real World
+  - Reference: [Crosby and Wallach, USENIX 20013](https://www.usenix.org/legacy/event/sec03/tech/full_papers/crosby/crosby.pdf)
+  - Main point: can paralyze several real-world systems (e.g. network intrusion detection) by exploiting badly designed hash functions.
+    - open source
+    - overly simplistic hash function (easy to reverse engineer a pathological data set).
+  - Solutions:
+    - use a cryptographic hash function (e.g. SHA-2): infeasible to reverse engineer a pathological data set
+    - use randomization: design a family H of hash functions such that, ∀ data sets S, "almost all" functions h ∈ H spread S out "pretty evenly" (compare to QuickSort guarantee)
+
+### Universal Hashing
+#### Overview
+  - Proposed definition of a "good random hash function" - universal family of hash functions
+  - Concrete example of simple + practival such functions
+  - Justifications of definition: "good functions" lead to "good performance"
+#### Definition
+  - Let H be a set of hash functions from U to {1,2,...,n-1}, H is universal if and only if: for all x,y ∈ U (with x != y), Pr[x,y collide (h(x) == h(y))] <= 1/n (n = # of buckets). when h is chosen uniformly at random from H (i.e. colissiong probability as small as with "gold standard" of perfectly random hashing)
+  - Quiz: Consider a hash family H, where each hash function of H maps elements from a universe U to one of n buckets. Suppose H has the following property: for every bucket i and key k, a 1/n fraction of the hash functions in H map k to i. Is H universal?
+    - Yes: Take H = all functions from u to {0,1,2,...,n-1}
+    - No: H = the set of n different constant functions
+#### Example: Hashing IP Addresses
+- Let U = IP addresses (of the form (x1, x2, x3, x4), with each xi ∈ {0,1,2,...255})
+- Let n = a prime (e.g. small multiple of # of objects in HT)
+- Construction: Define one hash function h(a) per 4-type a=(a1,a2,a3,a4) with each ai ∈ {0,1,2,...,n-1} 
+- Define: h(a): Ip Address -> buckets
+  - by h(a)(x1,x2,x3,x4) = (a1x1 + a2x2 + a3x3 + a4x4) mod n
+  - Theorem: This family is universal
+    - Assume: x4 != y4, Question: collision probability? (i.e. Prob (h(a) ∈ H) [h(a)(x1,...,x4) = h(a)(y1,...y4)])
+    - Note: collision <=> (a1x1 + a2x2 + a3x3 + a4x4) mod n = (a1y1 + a2y2 + a3y3 + a4y4) mod n <=> a4(x4 - y4) mod n = sum{i=1~3}(ai\*(yi-xi)) mod n
+    - Next: condition on random choices of a1,a2,a3. (a4 still random)
+    - The story so far: with a1,a2,a3 fixed arbitrarily, how many choices of a4 satisfy a4(x4 - y4) mod n = sum{i=1~3}(ai\*(yi-xi)) mod n <=> x,y collide under h(a)
+    - Key claim: left-hand side equally likely to be any of {0,1,2,...,n-1}
+    - Reason: x4 != y4 (x4 - y4 != o mod n) [addendum: make sure n bigger than maximum value of an ai]
