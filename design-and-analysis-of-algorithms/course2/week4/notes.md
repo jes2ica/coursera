@@ -58,3 +58,31 @@
 - Comparison
   - care about space: open addressing
   - deletion is trickier with open addressing than chaining
+#### What Makes a Good Hash Function
+- Note: in hash table with chaining, insert is o(1) [insert new object x at front of list in A[h(x)]]
+- o(list_length) for search/delete. [list_length could be anywhere from m/n(equal-length lists) to m(all objects in same bucket) for m objects]
+- Point: performance depends on the choice of hash function!
+  - analogous situation with open addressing 
+- Properties of a "good" hash function
+  - should lead to good performance -> i.e. should "spread data out" (gold standard: completely random hashing)
+  - should be easy to store / very fast to evaluate
+#### Bad Hash Functions
+- Example: keys = phone numbers (10-digits), |u| = 10^10, choose n = 10^3
+  - terrible hash function: h(x) = 1st 3 digits of x
+  - mediocre hash function: h(x) = last 3 digits of x [still vulnerable]
+- Example: keys = memory locations (will be multiples of a power of 2)
+  - bad hash function: h(x) = x % 1000
+    - all odd buckets guaranteed to be empty
+#### Quick-and-Dirty Hash Functions
+```
+Objects -----> integers -----> buckets {0,1,2,...n-1}
+
+    "hash code"   "compression function"
+``` 
+
+- hash code: e.g. subroutine to convert strings to integers
+- compression function: like the mod n function
+- How to choose n= # of buckets
+  - choose n to be a prime (within costant factor of # of objects in table)
+  - not too close to a power of 2
+  - not too close to a power of 10
