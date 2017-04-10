@@ -131,5 +131,24 @@ Objects -----> integers -----> buckets {0,1,2,...n-1}
     - Note: collision <=> (a1x1 + a2x2 + a3x3 + a4x4) mod n = (a1y1 + a2y2 + a3y3 + a4y4) mod n <=> a4(x4 - y4) mod n = sum{i=1~3}(ai\*(yi-xi)) mod n
     - Next: condition on random choices of a1,a2,a3. (a4 still random)
     - The story so far: with a1,a2,a3 fixed arbitrarily, how many choices of a4 satisfy a4(x4 - y4) mod n = sum{i=1~3}(ai\*(yi-xi)) mod n <=> x,y collide under h(a)
-    - Key claim: left-hand side equally likely to be any of {0,1,2,...,n-1}
-    - Reason: x4 != y4 (x4 - y4 != o mod n) [addendum: make sure n bigger than maximum value of an ai]
+    - Key claim: 
+      - left-hand side equally likely to be any of {0,1,2,...,n-1} => implies Prob[h(a)(x) = h(a)(y)] = 1/n
+    - Reason: 
+      - x4 != y4 (x4 - y4 != o mod n) [addendum: make sure n bigger than maximum value of an ai]
+      - n is prime
+      - a4 uniform at random
+    - "Proof" by example: n = 7, x4 - y4 = 2 or 3 mod n, (a4 = 1,2,...,7)
+    - QED!
+- Chaining: Constant-Time Guarantee
+  - Scenarios: hash table implemented with chaining, hash function h chosen uniformly at random from universal family H.
+  - Theorem: Carter - Wegman 1979
+    - All operations run in o(1) time (for every data set S)
+  - Caveats: 
+    - in expectation over random choice of the hash function h
+    - assumes |S|=o(n) [i.e., load α = |s|/n = o(1)] -> n = # of buckets
+    - assumes takes o(1) time to evaluate hash fn
+  - Proof:
+    - Will analysze an unsucessful lookup (other operations only faster)
+    - SoL let s = data set with |S| = o(n)
+    - consider lookup for x ∉ S
+  - Running Time: o(1)[compute h(x)] + o(list length in A[h(x)])[traverse list => L] -> a random variable depends on choice of h
