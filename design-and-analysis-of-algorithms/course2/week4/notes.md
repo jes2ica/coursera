@@ -124,7 +124,7 @@ Objects -----> integers -----> buckets {0,1,2,...n-1}
 - Let U = IP addresses (of the form (x1, x2, x3, x4), with each xi ∈ {0,1,2,...255})
 - Let n = a prime (e.g. small multiple of # of objects in HT)
 - Construction: Define one hash function h(a) per 4-type a=(a1,a2,a3,a4) with each ai ∈ {0,1,2,...,n-1} 
-- Define: h(a): Ip Address -> buckets
+- Define: h(a): IP Address -> buckets
   - by h(a)(x1,x2,x3,x4) = (a1x1 + a2x2 + a3x3 + a4x4) mod n
   - Theorem: This family is universal
     - Assume: x4 != y4, Question: collision probability? (i.e. Prob (h(a) ∈ H) [h(a)(x1,...,x4) = h(a)(y1,...y4)])
@@ -152,3 +152,61 @@ Objects -----> integers -----> buckets {0,1,2,...n-1}
     - SoL let s = data set with |S| = o(n)
     - consider lookup for x ∉ S
   - Running Time: o(1)[compute h(x)] + o(list length in A[h(x)])[traverse list => L] -> a random variable depends on choice of h
+- A General Decomposition Principle
+  - Identify random variable Y that you really care about.
+  - Express Y as sum of indicator random variables: Y = Sum(Xe)[e=1 -> n]
+  - Apply liberity of expectation: E[Y] = sum(Pr[Xe = 1]) => "just" need to understand those
+- Proof (Part II)
+  - Let L = list length in A[h(x)]
+  - For y ∈ S (so x != y), define Zy = {1 if h(y) = h(x)} : {0 otherwise}
+  - Note: L = sum(Zy) (y ∈ S)
+  - So: E[L] = sum{E[Zy]} (y ∈ S) = sum{Pr[h(y) = h(x)]} (y ∈ S)
+- Open Addressing
+  - Recall: one object per slot, hash function produces a probe sequence for each possible key x.
+  - Fact: difficult to analyze rigorously
+  - Heuristic assumption: (for a quick & dirty idealized analysis only) all n! probe sequences euqally likely.
+  - Observation: under heuristic assumption, expected Insertion time ~ 1/(1-α), where α = load.
+  - Proof: A random probe finds an empty slot with probabilty 1 - α.
+  - So: Insertion time ~ the number N of coin flips to get "heads", where Pr["heads"] = 1 - α
+  - Note: E[N] = 1 + α * E[N] <- (probility of tails * expected # of further coin flips needed)
+        (1st coin flips)
+  - Solution: E[N] = 1 / (1 - α)
+- Linear Probing
+  - Note: heuristic assumption completely false.
+  - Assume instead:
+    - initial probe uniformly random, independent for different keys.
+    - Theorem: [Knuth 1962] under above assumption, expected Insertion time is ~ 1 / (1 - α)^2, where α = load.
+  - "I first formulated the following derivation in 1962... Ever since that day, the analysis of algorithms has in fact been one of the major themes in my life." - D. E. Knuth, The Art of Computer Programming
+#### Bloom Filters
+- Operations: fast inserts and lookups
+- Comparison to Hash Tables:
+  - Pros: move space effecient
+  - Cons: 
+    - can't store an assoicated object
+    - no deletions
+    - small false positive probability (i.e. might say x has been inserted even though it hasn't been)
+- Applications:
+  - Original: early spellcheckers
+  - Canonical: list of forbidden passwords
+  - Modern: network routers
+    - limited memory, need to be super-fast
+  - Under the Hood
+    - Ingredients: 
+      - array of n bits (so n/|S| = # of bits per object in data set S)
+      - k hash functions h1, ..., hk (k = small constant)
+    - Insert(x): for i = 1,2,...,k set A[hi(x)]=1 (whether or not bit alrady set to 1)
+    - Lookup(x): return TRUE <=> A[hi(x)] = 1 for every i = 1,2,...,k
+    - Note: no false negatives(if x was inserted, lookup(x) guaranteed to succeed)
+    - But: false positive if all k hi(x)'s already set to i by other insertions
+  - Heuristic Analysis
+    - Intuition: should be a trade-off between space and error (false positive) probability.
+    - Assume: [not justified] all hi(x)'s uniformly random and independent (across different i's and x's).
+    - Setup: n bits, insert data sets into bloom filter.
+    - Note: for each bit of A, the probability it's been set to 1 is (under above assumption): 1-(1-1/n)^k|S| ~ 1 - e^(-k|S|/n) = 1 - e^(-k/b) -> b = # of bits per object
+    - Story so far: probability a given bit is 1 is ~ 1 - e^(k/b)
+    - So: under assumption, for x ∉ S, false positive probability is <= [1 - e^(-k/b)]^k => error_rate є, where b = # of bits per object.
+    - How to set k? For fixed b, є is minimized by setting k ~ (ln 2)\*b ~ 0.693 \* b
+    - Plugging back in: є ~ (1/2)^(ln 2)b (exponentially smally in b) or b ~ 1.44 log_2 (1/є)
+    - Ex: with b = 8, choose k = 5 or 6, error probability only 2 %
+    
+    
