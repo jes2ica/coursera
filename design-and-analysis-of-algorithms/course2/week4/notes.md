@@ -202,11 +202,10 @@ Objects -----> integers -----> buckets {0,1,2,...n-1}
     - Intuition: should be a trade-off between space and error (false positive) probability.
     - Assume: [not justified] all hi(x)'s uniformly random and independent (across different i's and x's).
     - Setup: n bits, insert data sets into bloom filter.
-    - Note: for each bit of A, the probability it's been set to 1 is (under above assumption): 1-(1-1/n)^k|S| ~ 1 - e^(-k|S|/n) = 1 - e^(-k/b) -> b = # of bits per object
-    - Story so far: probability a given bit is 1 is ~ 1 - e^(k/b)
+    - Note: for each bit of A, the probability it's been set to 1 is (under above assumption): 
+      - 1-(1-1/n)^k|S| ~ 1 - e^(-k|S|/n) = 1 - e^(-k/b) -> b = # of bits per object
+    - Story so far: probability a given bit is 1 is ~ 1 - e^(-k/b)
     - So: under assumption, for x ∉ S, false positive probability is <= [1 - e^(-k/b)]^k => error_rate є, where b = # of bits per object.
     - How to set k? For fixed b, є is minimized by setting k ~ (ln 2)\*b ~ 0.693 \* b
     - Plugging back in: є ~ (1/2)^(ln 2)b (exponentially smally in b) or b ~ 1.44 log_2 (1/є)
     - Ex: with b = 8, choose k = 5 or 6, error probability only 2 %
-    
-    
